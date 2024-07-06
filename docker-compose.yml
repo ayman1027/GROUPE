@@ -22,22 +22,33 @@ services:
       - db
 
   db:
-    build:
-      context: ./db
-      dockerfile: Dockerfile
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: twitchdb
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+    ports:
+      - "3307:3306"
     volumes:
-      - db-data:/var/lib/postgresql/data
+      - db-data:/var/lib/mysql
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
     networks:
       - twitch-net
-    environment:
-      POSTGRES_USER: user
-      POSTGRES_PASSWORD: password
-      POSTGRES_DB: twitchdb
 
 networks:
   twitch-net:
+    external: true
 
 volumes:
   db-data:
+
+
+
+
+
+
+
+
 
 

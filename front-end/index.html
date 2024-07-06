@@ -3,9 +3,72 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Front-end</title>
+  <title>Front-end de Twitch</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
-  <h1>Bienvenue sur le front-end de Twitch</h1>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="#">Twitch Front-end</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="#">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">About</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Contact</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="container mt-5">
+    <div class="jumbotron">
+      <h1 class="display-4">Bienvenue sur le front-end de Twitch</h1>
+      <p class="lead">Ceci est une application de démonstration utilisant Docker et une architecture de conteneurs pour le développement front-end et back-end.</p>
+      <hr class="my-4">
+      <p>Pour en savoir plus, cliquez sur le bouton ci-dessous.</p>
+      <a class="btn btn-primary btn-lg" href="#" role="button">En savoir plus</a>
+    </div>
+
+    <div class="mt-5">
+      <h2>Liste des utilisateurs</h2>
+      <ul id="user-list" class="list-group">
+        <!-- Les utilisateurs seront ajoutés ici -->
+      </ul>
+    </div>
+  </div>
+
+  <footer class="footer bg-dark text-white text-center py-3">
+    <div class="container">
+      <span>&copy; 2024 Twitch Front-end. Tous droits réservés.</span>
+    </div>
+  </footer>
+
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script>
+    // Fonction pour récupérer et afficher les utilisateurs
+    async function fetchUsers() {
+      const response = await fetch('http://localhost:3001/api/users');
+      const users = await response.json();
+      const userList = document.getElementById('user-list');
+      users.forEach(user => {
+        const li = document.createElement('li');
+        li.className = 'list-group-item';
+        li.textContent = `${user.username} - ${user.email}`;
+        userList.appendChild(li);
+      });
+    }
+
+    // Appel de la fonction fetchUsers au chargement de la page
+    window.onload = fetchUsers;
+  </script>
 </body>
 </html>
